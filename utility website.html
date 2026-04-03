@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Utility Hub Pro</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #222;
+    }
+
+    header {
+      background: linear-gradient(120deg, #667eea, #764ba2);
+      color: white;
+      padding: 25px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background: #f1f3f6;
+    }
+
+    .toggle {
+      cursor: pointer;
+      padding: 8px 14px;
+      background: #222;
+      color: white;
+      border-radius: 6px;
+    }
+
+    .container {
+      padding: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      color: #4a4aff;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    button {
+      margin-top: 10px;
+      background: linear-gradient(120deg, #4a4aff, #00c6ff);
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      transition: transform 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .output {
+      margin-top: 15px;
+      padding: 12px;
+      background: #f7f9fc;
+      border-radius: 10px;
+      border: 1px solid #e2e6ea;
+      font-size: 14px;
+      min-height: 50px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      transition: width 0.3s;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 13px;
+      color: #777;
+    }
+
+    .dark {
+      background: #0f172a;
+      color: #eee;
+    }
+
+    .dark .card {
+      background: #1e293b;
+    }
+
+    .dark .output {
+      background: #0f172a;
+      border-color: #334155;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  ⚡ System Utility Hub PRO
+</header>
+
+<div class="topbar">
+  <div>Advanced Tools Panel</div>
+  <div class="toggle" onclick="toggleDarkMode()">Toggle Dark Mode</div>
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <h2>🛡️ Smart Virus Scanner</h2>
+    <p>Simulated AI-based deep system scan with progress tracking.</p>
+    <button onclick="scanVirus()">Start Deep Scan</button>
+    <div class="progress-bar"><div class="progress" id="progress"></div></div>
+    <div class="output" id="virusOutput">Idle</div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 GPU Auto Detection</h2>
+    <p>Detect GPU using browser capabilities (limited detection).</p>
+    <button onclick="detectGPU()">Detect GPU</button>
+    <div class="output" id="gpuOutput">Not detected</div>
+  </div>
+
+  <div class="card">
+    <h2>⬇️ Smart Driver Finder</h2>
+    <p>Get official latest driver links instantly.</p>
+    <button onclick="getDriverLinks()">Find Drivers</button>
+    <div class="output" id="linkOutput">Waiting...</div>
+  </div>
+
+</div>
+
+<footer>
+  © 2026 System Utility Hub PRO | Advanced Demo UI
+</footer>
+
+<script>
+  function toggleDarkMode() {
+    document.body.classList.toggle("dark");
+  }
+
+  function scanVirus() {
+    const output = document.getElementById("virusOutput");
+    const progress = document.getElementById("progress");
+
+    let percent = 0;
+    output.innerHTML = "Initializing scan...";
+
+    const interval = setInterval(() => {
+      percent += 10;
+      progress.style.width = percent + "%";
+
+      if (percent < 100) {
+        output.innerHTML = "Scanning system files... " + percent + "%";
+      } else {
+        clearInterval(interval);
+        output.innerHTML = "✔ System Secure. No threats found.";
+      }
+    }, 400);
+  }
+
+  function detectGPU() {
+    const output = document.getElementById("gpuOutput");
+
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+
+      if (gl) {
+        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+        const renderer = debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : "Unknown GPU";
+        output.innerHTML = "Detected GPU: " + renderer;
+      } else {
+        output.innerHTML = "GPU detection not supported.";
+      }
+    } catch (e) {
+      output.innerHTML = "Error detecting GPU.";
+    }
+  }
+
+  function getDriverLinks() {
+    const output = document.getElementById("linkOutput");
+
+    output.innerHTML = `
+      <b>Official Driver Sources:</b><br><br>
+      <a href="https://www.nvidia.com/Download/index.aspx" target="_blank">➡ NVIDIA Drivers</a><br>
+      <a href="https://www.amd.com/en/support" target="_blank">➡ AMD Drivers</a><br>
+      <a href="https://www.intel.com/content/www/us/en/download-center/home.html" target="_blank">➡ Intel Drivers</a>
+    `;
+  }
+</script>
+
+</body>
+</html>
